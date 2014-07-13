@@ -59,7 +59,11 @@ class ChuckNorrisAxis extends Axis {
         final String displayName = 'Chuck Norris Quote Axis'
 
         DescriptorImpl() {
-            chuckNorrisPluginHandler = new ChuckNorrisPluginHandler()
+            if (Jenkins.instance.getPlugin('chucknorris') != null) {
+                chuckNorrisPluginHandler = new ChuckNorrisPluginHandler()
+            } else {
+                chuckNorrisPluginHandler = new ChuckNorrisPluginNotInstalled()
+            }
         }
 
         int getCount() {
