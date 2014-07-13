@@ -43,7 +43,7 @@ class ChuckNorrisContainer extends  Container {
 
         setItems(cni)
 
-        cni.each { list.add( it.toString()) }
+        cni.each { list << it.toString() }
         list
     }
 
