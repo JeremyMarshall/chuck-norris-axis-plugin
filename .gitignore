@@ -1,0 +1,5 @@
+.gradle/
+.idea/
+build/
+chuck-norris-axis-plugin.iml
+work/

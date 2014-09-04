@@ -6,17 +6,23 @@ public abstract class Container extends Item {
 
     private List<? extends Item> axisItems;
 
+    public Container() {
+        super();
+    }
+
     public Container(List<? extends Item> axisItems) {
 
+        super();
+
         if(axisItems == null)
-            this.axisItems = emptyList();
+            this.axisItems = ItemList.emptyList();
         else
             this.axisItems = axisItems;
     }
 
     public List<? extends Item> getAxisItems(){
         if(axisItems == null)
-            return emptyList();
+            return ItemList.emptyList();
         else
             return axisItems;
     }
@@ -28,7 +34,7 @@ public abstract class Container extends Item {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
-        for (Item item : getAxisItems()) {
+        for (Object item : getAxisItems()) {
             ret.append(item.toString()).append(' ');
         }
         return ret.toString();

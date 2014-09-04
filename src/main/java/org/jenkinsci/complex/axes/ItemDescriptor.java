@@ -1,11 +1,7 @@
 package org.jenkinsci.complex.axes;
 
 import hudson.model.Descriptor;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
 
 public abstract class ItemDescriptor extends Descriptor<Item> {
 
@@ -13,9 +9,8 @@ public abstract class ItemDescriptor extends Descriptor<Item> {
         return "Item";
     }
 
-
     public   List<? extends Item> loadDefaultItems(){
-        return Collections.emptyList();
+        return ItemList.emptyList();
     }
 
     public   List<? extends Item> loadDefaultItems(List<? extends Item> cai){

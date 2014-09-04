@@ -5,7 +5,7 @@ import net.sf.json.JSONObject;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public abstract class AxisDescriptor extends hudson.matrix.AxisDescriptor {
@@ -29,7 +29,7 @@ public abstract class AxisDescriptor extends hudson.matrix.AxisDescriptor {
 
         List<ItemDescriptor> ait =  axisItemTypes();
 
-        ArrayList<Item> ai =  new ArrayList<Item>();
+        List<Item> ai =  new ItemList<Item>();
 
         for( int i = 0; i < ait.size(); i++){
             ait.get(i).loadDefaultItems(ai);

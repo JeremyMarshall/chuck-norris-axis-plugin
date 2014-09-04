@@ -29,6 +29,7 @@ import jenkins.model.Jenkins
 import org.jenkinsci.complex.axes.Axis
 import org.jenkinsci.complex.axes.AxisDescriptor
 import org.jenkinsci.complex.axes.Item
+import org.jenkinsci.complex.axes.ItemList
 import org.jenkinsci.complex.axes.ItemDescriptor
 import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
@@ -103,16 +104,16 @@ class ChuckNorrisAxis extends Axis {
         List<? extends ChuckNorrisItem> getItems() {
             try {
                 if (chuckNorrisPluginHandler.installed()) {
-                    def ret = []
+                    def ret = new ItemList<ChuckNorrisItemRO>()
                     for (int i = 0; i < count; i++) {
                         ret << new ChuckNorrisItemRO( chuckNorrisPluginHandler.fact )
                     }
                     return ret
                 } else {
-                    Item.emptyList()
+                    ItemList.emptyList()
                 }
             } catch (ex) {
-                Item.emptyList()
+                ItemList.emptyList()
             }
         }
 

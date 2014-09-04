@@ -2,8 +2,6 @@ package org.jenkinsci.complex.axes;
 
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Describable;
-
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Item extends AbstractDescribableImpl<Item> implements Comparable, Describable<Item> {
@@ -17,10 +15,6 @@ public abstract class Item extends AbstractDescribableImpl<Item> implements Comp
     @Override
     public int compareTo(Object o) {
         return this.toString().compareTo(o.toString());
-    }
-
-    public static List<Item> emptyList(){
-        return Collections.emptyList();
     }
 
     public List<String> rebuild(List<String> list){

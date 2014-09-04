@@ -2,6 +2,9 @@ package org.jenkinsci.complex.axes;
 
 import hudson.matrix.MatrixBuild;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.Map;
 
 public abstract class Axis extends hudson.matrix.Axis {
 
-    private final List<? extends Item> axisItems;
+    private List<? extends Item> axisItems;
 
     public Axis(String name, String value){
         super(name, value);
@@ -18,7 +21,7 @@ public abstract class Axis extends hudson.matrix.Axis {
 
     public Axis(String name, List<? extends Item> axisItems){
         super(name, Axis.convertToAxisValue(axisItems));
-        this.axisItems = (axisItems!=null)?axisItems: Item.emptyList();
+        this.axisItems = (axisItems!=null)?axisItems: ItemList.emptyList();
     }
 
     public static String convertToAxisValue(List<? extends Item> axisItems){
@@ -26,7 +29,7 @@ public abstract class Axis extends hudson.matrix.Axis {
         boolean valueDefined = false;
 
         if(axisItems == null)
-            axisItems = Item.emptyList();
+            axisItems = ItemList.emptyList();
 
         for (Item item : axisItems) {
             String i = item.toString();

@@ -5,15 +5,23 @@ import jenkins.model.Jenkins
 import org.jenkinsci.complex.axes.Container
 import org.jenkinsci.complex.axes.ContainerDescriptor
 import org.jenkinsci.complex.axes.Item
+import org.jenkinsci.complex.axes.ItemList
 import org.kohsuke.stapler.DataBoundConstructor
 
 class ChuckNorrisContainer extends  Container {
 
     ChuckNorrisContainer() {
-        super( [] )
+        super( new ItemList<ChuckNorrisItemRO>() )
     }
 
     @DataBoundConstructor
+    ChuckNorrisContainer(String items) {
+        this.items = new ItemList<ChuckNorrisItemRO>()
+        items.eachLine {
+            this.items << new ChuckNorrisItemRO(it)
+        }
+    }
+
     ChuckNorrisContainer(List<ChuckNorrisItemRO> items) {
         super( items)
     }
@@ -26,10 +34,10 @@ class ChuckNorrisContainer extends  Container {
         setAxisItems(sc)
     }
 
-    @Override
-    String toString() {
-        'Quotes from Chuck Norris Plugin'
-    }
+    //@Override
+    //String toString() {
+    //    ''
+    //}
 
     @Override
     List<String> rebuild(List<String> list) {
