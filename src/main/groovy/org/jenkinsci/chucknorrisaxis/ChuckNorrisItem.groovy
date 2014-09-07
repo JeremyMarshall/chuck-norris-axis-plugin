@@ -23,11 +23,7 @@ class ChuckNorrisItem extends  Item implements Comparable {
 
     @Override
     String toString() {
-        String.format('%s', quote)
-    }
-
-    String getQuote() {
-        this.quote
+        quote
     }
 
     @Extension

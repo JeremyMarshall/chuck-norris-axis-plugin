@@ -34,10 +34,10 @@ class ChuckNorrisContainer extends  Container {
         setAxisItems(sc)
     }
 
-    //@Override
-    //String toString() {
-    //    ''
-    //}
+    @Override
+    String toString() {
+        'DetectedChuckNorrisQuotes'
+    }
 
     @Override
     List<String> rebuild(List<String> list) {

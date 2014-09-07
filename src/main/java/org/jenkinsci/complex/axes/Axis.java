@@ -14,7 +14,7 @@ public abstract class Axis extends hudson.matrix.Axis {
 
     private List<? extends Item> axisItems;
 
-    public Axis(String name, String value){
+    public Axis(String name, String... value){
         super(name, value);
         axisItems = new ArrayList<Item>();
     }
@@ -24,9 +24,8 @@ public abstract class Axis extends hudson.matrix.Axis {
         this.axisItems = (axisItems!=null)?axisItems: ItemList.emptyList();
     }
 
-    public static String convertToAxisValue(List<? extends Item> axisItems){
-        StringBuilder ret = new StringBuilder();
-        boolean valueDefined = false;
+    public static List<String> convertToAxisValue(List<? extends Item> axisItems){
+        List<String> ret = new ArrayList<String>();
 
         if(axisItems == null)
             axisItems = ItemList.emptyList();
@@ -34,15 +33,14 @@ public abstract class Axis extends hudson.matrix.Axis {
         for (Item item : axisItems) {
             String i = item.toString();
             if( i.length() > 0){
-                valueDefined = true;
-                ret.append(item.toString()).append(' ');
+                ret.add(item.toString());
             }
         }
         //there has to be something here for the Axis.value
-        if (!valueDefined)
-            ret.append("default");
+        if (ret.size() == 0)
+            ret.add("default");
 
-        return ret.toString();
+        return ret;
     }
 
     public List<? extends Item> getAxisItems(){
@@ -51,6 +49,16 @@ public abstract class Axis extends hudson.matrix.Axis {
 
     @Override
     public void addBuildVariable(String value, Map<String,String> map){}
+
+    //@Override
+    //public String getValueString(){
+    //    String ret = convertToAxisValue(this.axisItems).toString();
+    //    if(ret == null){
+    //        return ret;
+    //    }else{
+    //        return "default";
+    //    }
+    //}
 
     @Override
     public List<String> rebuild( MatrixBuild.MatrixBuildExecution context )
