@@ -54,7 +54,7 @@ class ChuckNorrisAxis extends Axis {
     @Extension
     @InheritConstructors
     static class DescriptorImpl extends AxisDescriptor {
-        private int count
+        private int count = 3
         @SuppressWarnings('PrivateFieldCouldBeFinal')
         private IFact chuckNorrisPluginHandler
         final String displayName = 'Chuck Norris Quote Axis'
