@@ -12,33 +12,33 @@ buildscript {
     }
     dependencies {
         classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.5.3-SNAPSHOT'
-        classpath 'org.jvnet.localizer:maven-localizer-plugin:1.12'
-        classpath 'org.jenkins-ci.main:jenkins-core:1.480'
-        classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
+        //classpath 'org.jvnet.localizer:maven-localizer-plugin:1.12'
+        //classpath 'org.jenkins-ci.main:jenkins-core:1.480'
+        //classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
     }
 }
 apply plugin: 'jpi'
-apply plugin: 'idea'
-apply plugin: 'cobertura'
-apply plugin: 'codenarc'
+//apply plugin: 'idea'
+//apply plugin: 'cobertura'
+//apply plugin: 'codenarc'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
-codenarc {
-    toolVersion = '0.21'
-    configFile = file('config/codenarc/rules.groovy')
-}
+//codenarc {
+//    toolVersion = '0.21'
+//    configFile = file('config/codenarc/rules.groovy')
+//}
 
-codenarcTest {
-    configFile = file('config/codenarc/rules-test.groovy')
-}
+//codenarcTest {
+//    configFile = file('config/codenarc/rules-test.groovy')
+//}
 
-cobertura{
-  coverageSourceDirs = [project.sourceSets.main.java.srcDirs,
-                        project.sourceSets.main.groovy.srcDirs]
-  coverageIgnoreTrivial = true
-}
+//cobertura{
+//  coverageSourceDirs = [project.sourceSets.main.java.srcDirs,
+//                        project.sourceSets.main.groovy.srcDirs]
+//  coverageIgnoreTrivial = true
+//}
 
 repositories {
     maven {
@@ -49,6 +49,11 @@ repositories {
 }
 
 dependencies {
+    compile gradleApi()
+    compile('org.jvnet.localizer:maven-localizer-plugin:1.13',
+            'org.jenkins-ci:version-number:1.0')
+    compile localGroovy()
+
     optionalJenkinsPlugins([group: 'org.jvnet.hudson.plugins', name: 'chucknorris', version: '0.5', ext: 'jar'])
     testCompile 'org.spockframework:spock-core:0.6-groovy-1.8'
     jenkinsTest 'org.jenkins-ci.plugins:ant:1.1@jar',
