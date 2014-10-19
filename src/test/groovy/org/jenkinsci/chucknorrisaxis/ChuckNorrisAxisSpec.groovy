@@ -2,6 +2,7 @@ package org.jenkinsci.chucknorrisaxis
 
 import hudson.matrix.AxisList
 import hudson.matrix.MatrixProject
+import org.jvnet.hudson.test.recipes.WithPlugin
 import spock.lang.Shared
 import spock.lang.Specification
 import jenkins.model.Jenkins
@@ -16,6 +17,7 @@ class ChuckNorrisAxisSpec extends Specification {
     @Shared
     chuckNorrisAxisDescriptor
 
+    @WithPlugin("matrix-project.hpi")
     MatrixProject configure(chuckNorrisPluginHandler, factCount) {
 
         if (chuckNorrisAxisDescriptor == null) {
@@ -36,6 +38,7 @@ class ChuckNorrisAxisSpec extends Specification {
         matrixProject
     }
 
+    @WithPlugin("matrix-project.hpi")
     MatrixProject configureManual() {
 
         def matrixProject = rule.createMatrixProject()
@@ -56,6 +59,7 @@ class ChuckNorrisAxisSpec extends Specification {
         matrixProject
     }
 
+    @WithPlugin("matrix-project.hpi")
     def 'Dynamic'() {
 
         given:
@@ -83,6 +87,7 @@ class ChuckNorrisAxisSpec extends Specification {
         build.runs.size() == 3
     }
 
+    @WithPlugin("matrix-project.hpi")
     def 'Dynamic Plugin Gone Away'() {
 
         given:
@@ -105,6 +110,7 @@ class ChuckNorrisAxisSpec extends Specification {
         build.runs.size() == 0
     }
 
+    @WithPlugin("matrix-project.hpi")
     def 'Dynamic No Plugin'() {
         given:
         def chuckNorrisPluginHandler = Mock(IFact)
@@ -120,6 +126,7 @@ class ChuckNorrisAxisSpec extends Specification {
         build.runs.size() == 0
     }
 
+    @WithPlugin("matrix-project.hpi")
     def 'Empty Axis'() {
         given:
         def matrixProject = rule.createMatrixProject()
@@ -136,6 +143,7 @@ class ChuckNorrisAxisSpec extends Specification {
         build.runs.size() == 0
     }
 
+    @WithPlugin("matrix-project.hpi")
     def 'Manual'() {
         given:
         def matrixProject = configureManual()
