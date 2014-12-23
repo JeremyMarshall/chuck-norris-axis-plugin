@@ -29,6 +29,7 @@ codenarcTest {
 }
 
 cobertura{
+  coverageFormats = ['html', 'xml']
   coverageSourceDirs = [project.sourceSets.main.java.srcDirs, 
                         project.sourceSets.main.groovy.srcDirs]  
   coverageIgnoreTrivial = true
