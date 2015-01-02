@@ -2,12 +2,12 @@ buildscript {
     repositories {
         maven {
             name "jenkins"
-            delegate.url("http://repo.jenkins-ci.org/releases/")
+            delegate.url("http://repo.jenkins-ci.org/public")
         }
         mavenCentral()
     }
     dependencies {
-        classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.6.0'
+        classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.5.0'
         classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
     }
 }
@@ -29,7 +29,7 @@ codenarcTest {
 }
 
 cobertura{
-  coverageFormats = ['html', 'xml']
+  //coverageFormats = ['html', 'xml']
   coverageSourceDirs = [project.sourceSets.main.java.srcDirs, 
                         project.sourceSets.main.groovy.srcDirs]  
   coverageIgnoreTrivial = true
@@ -40,6 +40,8 @@ repositories {
 }
 
 dependencies {
+    jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.4@jar'
+    jenkinsPlugins('org.jenkins-ci.plugins:job-dsl-stub-plugin:1.0-SNAPSHOT@jar')
     optionalJenkinsPlugins([group: 'org.jvnet.hudson.plugins', name: 'chucknorris', version: '0.5', ext: 'jar'])
     testCompile 'org.spockframework:spock-core:0.6-groovy-1.8'
     jenkinsTest 'org.jenkins-ci.plugins:ant:1.1@jar',
@@ -51,7 +53,7 @@ version = '0.0.1'
 description = 'Demo Axis plugin which rebuilds at build time'
 
 jenkinsPlugin {
-    coreVersion = '1.480'
+    coreVersion = '1.595'
     displayName = 'Demo Chuck Norris Axis'
     url = 'https://wiki.jenkins-ci.org/display/JENKINS/Chuck+Norris+Axis+Plugin'
     gitHubUrl = 'https://github.com/jenkinsci/chuck-norris-axis-plugin'
