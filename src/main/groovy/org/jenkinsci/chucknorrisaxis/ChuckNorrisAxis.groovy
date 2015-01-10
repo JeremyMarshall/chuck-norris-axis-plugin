@@ -42,6 +42,23 @@ class ChuckNorrisAxis extends Axis {
         super(name, items)
     }
 
+    static ChuckNorrisAxis factory(String name, boolean addDefault, List<String> quotes) {
+        def desc = Jenkins.instance.getDescriptor( ChuckNorrisAxis.class )
+
+        def i = []
+        if(addDefault) {
+            i = desc.loadDefaultItems()
+        }
+
+        quotes.each{
+            i << new ChuckNorrisItem(it)
+        }
+
+        new ChuckNorrisAxis(name, i)
+
+    }
+
+
     List<? extends ChuckNorrisItem> getItems() {
         axisItems as List<? extends ChuckNorrisItem>
     }
