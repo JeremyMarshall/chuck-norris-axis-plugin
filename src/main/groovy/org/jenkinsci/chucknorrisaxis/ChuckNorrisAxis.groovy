@@ -54,10 +54,15 @@ class ChuckNorrisAxis extends Axis {
             i << new ChuckNorrisItem(it)
         }
 
+        println GroovySystem.version
+
         new ChuckNorrisAxis(name, i)
 
     }
 
+    void setName(String name) {
+        this.name = name
+    }
 
     List<? extends ChuckNorrisItem> getItems() {
         axisItems as List<? extends ChuckNorrisItem>

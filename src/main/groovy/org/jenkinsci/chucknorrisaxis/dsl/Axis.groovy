@@ -1,14 +1,17 @@
-package org.jenkinsci.chucknorrisaxis
+package org.jenkinsci.chucknorrisaxis.dsl
 
-import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis
+import org.jenkinsci.chucknorrisaxis.ChuckNorrisAxis
+//import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis
 import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Method
 import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Parameter
+//import groovy.lang.Closure
+
 import hudson.Extension
 /**
  * Created by jeremymarshall on 1/01/2015.
  */
 @Extension
-class DSL extends org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis{
+class Axis extends org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis{
 
     @Override
     public String getName(){
@@ -20,33 +23,51 @@ class DSL extends org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis{
         return "Add a Chuck Norris Axis in";
     }
 
+    @Override
     public final boolean hasMethods(){
         return true;
     };
 
+    @Override
+    public org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Closure getClosureCategory() {
+        return Item;
+    }
+
+    @Method(description="Add a chuckNorrisAxis with a closure")
+    public Object chuckNorris(@Parameter(description="Axis name") String name, @Parameter(description="Closure for axes") Object closure) {
+
+        Item i = new Item()
+
+        closure.setDelegate(i)
+        closure.resolveStrategy = Closure.DELEGATE_FIRST
+        closure()
+
+        new ChuckNorrisAxis(i.name, i.items)
+    }
+
 
     @Method(description="Add a chuckNorrisAxis with only chucknorrisplugin entries")
     public Object chuckNorris(@Parameter(description="Axis name") String name) {
-        return ChuckNorrisAxis.factory(name, true, []);
+        return ChuckNorrisAxis.factory(name, true, [])
     }
 
     @Method(description="Add a chuckNorrisAxis with only manual (List) entries")
     public Object chuckNorrisManual(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") List<String> quotes) {
-        return ChuckNorrisAxis.factory(name, false, quotes);
+        return ChuckNorrisAxis.factory(name, false, quotes)
     }
 
     @Method(description="Add a chuckNorrisAxis with only manual (vaargs) entries")
     public Object chuckNorrisManual(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") String... quotes) {
-        return ChuckNorrisAxis.factory(name, false, Arrays.asList(quotes));
+        return ChuckNorrisAxis.factory(name, false, Arrays.asList(quotes))
     }
 
     @Method(description="Add a chuckNorrisAxis with chucknorrisplugin and (List) manual entries")
     public Object chuckNorrisBoth(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") List<String> quotes) {
-        return ChuckNorrisAxis.factory(name, true, quotes);
+        return ChuckNorrisAxis.factory(name, true, quotes)
     }
 
     @Method(description="Add a chuckNorrisAxis with chucknorrisplugin and (vaargs) manual entries")
     public Object chuckNorrisBoth(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") String... quotes) {
-        return ChuckNorrisAxis.factory(name, true, Arrays.asList(quotes));
+        return ChuckNorrisAxis.factory(name, true, Arrays.asList(quotes))
     }
 }

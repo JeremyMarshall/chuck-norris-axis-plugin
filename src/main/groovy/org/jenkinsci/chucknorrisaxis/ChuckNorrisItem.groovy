@@ -10,7 +10,7 @@ import org.kohsuke.stapler.QueryParameter
 
 class ChuckNorrisItem extends  Item implements Comparable {
 
-    protected String quote
+    String quote
 
     ChuckNorrisItem() {
         quote = 'Chuck Norris is his own DataBoundConstructor'
