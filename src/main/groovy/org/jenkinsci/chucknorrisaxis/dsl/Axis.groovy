@@ -1,11 +1,8 @@
 package org.jenkinsci.chucknorrisaxis.dsl
 
 import org.jenkinsci.chucknorrisaxis.ChuckNorrisAxis
-//import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis
 import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Method
 import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Parameter
-//import groovy.lang.Closure
-
 import hudson.Extension
 /**
  * Created by jeremymarshall on 1/01/2015.
@@ -29,20 +26,14 @@ class Axis extends org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis{
     };
 
     @Override
-    public org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Closure getClosureCategory() {
-        return Item;
+    public Object getClosureDelegate() {
+        return new AxisClosure()
     }
 
     @Method(description="Add a chuckNorrisAxis with a closure")
-    public Object chuckNorris(@Parameter(description="Axis name") String name, @Parameter(description="Closure for axes") Object closure) {
-
-        Item i = new Item()
-
-        closure.setDelegate(i)
-        closure.resolveStrategy = Closure.DELEGATE_FIRST
-        closure()
-
-        new ChuckNorrisAxis(i.name, i.items)
+    public Object chuckNorris(@Parameter(description="Closure for axes") Object closure) {
+        AxisClosure i = runClosure(closure)
+        new ChuckNorrisAxis(i.axisName, i.items)
     }
 
 
