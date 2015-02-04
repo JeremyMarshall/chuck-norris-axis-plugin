@@ -28,20 +28,15 @@ class AxisClosure extends org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Clos
         return true;
     }
 
-    @Override
-    public Object getClosureDelegate() {
-        return new ItemClosure()
-    }
-
     @Method(description="Axis name")
     public void axisName(@Parameter(description = "The name of the axis") String axisName) {
         this.axisName = axisName
     }
 
-    @Method(description="Add chuckNorrisItems with a closure")
+    @Method(description="Add chuckNorrisItems with a closure", closureClass = ItemClosure)
     public Object items(@Parameter(description="Closure for items") Object closure) {
 
-        ItemClosure i = runClosure(closure)
+        ItemClosure i = runClosure(closure, ItemClosure)
 
         i.items.each {
             items << it

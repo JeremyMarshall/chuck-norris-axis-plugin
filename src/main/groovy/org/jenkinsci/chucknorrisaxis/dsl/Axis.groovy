@@ -25,14 +25,9 @@ class Axis extends org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis{
         return true;
     };
 
-    @Override
-    public Object getClosureDelegate() {
-        return new AxisClosure()
-    }
-
-    @Method(description="Add a chuckNorrisAxis with a closure")
+    @Method(description="Add a chuckNorrisAxis with a closure", closureClass = AxisClosure)
     public Object chuckNorris(@Parameter(description="Closure for axes") Object closure) {
-        AxisClosure i = runClosure(closure)
+        AxisClosure i = runClosure(closure, AxisClosure)
         new ChuckNorrisAxis(i.axisName, i.items)
     }
 
