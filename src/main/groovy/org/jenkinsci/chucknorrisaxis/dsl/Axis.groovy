@@ -1,59 +1,45 @@
 package org.jenkinsci.chucknorrisaxis.dsl
 
 import org.jenkinsci.chucknorrisaxis.ChuckNorrisAxis
-import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Method
-import org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Parameter
 import hudson.Extension
+import javaposse.jobdsl.dsl.DslExtensionMethod
+import javaposse.jobdsl.plugin.ContextExtensionPoint
 /**
  * Created by jeremymarshall on 1/01/2015.
  */
-@Extension
-class Axis extends org.jenkinsci.plugins.jobdsl.stub.annotations.dsl.Axis{
+@Extension(optional = true)
+class Axis extends ContextExtensionPoint {
 
-    @Override
-    public String getName(){
-        return "chuckNorrisAxis";
+    @DslExtensionMethod(context = AxisContext)
+    public Object chuckNorris(Runnable closure) {
+        AxisContext context = new AxisContext();
+        executeInContext(closure, context);
+
+        new ChuckNorrisAxis(context.axisName, context.items);
     }
 
-    @Override
-    public String getDescription(){
-        return "Add a Chuck Norris Axis in";
-    }
-
-    @Override
-    public final boolean hasMethods(){
-        return true;
-    };
-
-    @Method(description="Add a chuckNorrisAxis with a closure", closureClass = AxisClosure)
-    public Object chuckNorris(@Parameter(description="Closure for axes") Object closure) {
-        AxisClosure i = runClosure(closure, AxisClosure)
-        new ChuckNorrisAxis(i.axisName, i.items)
-    }
-
-
-    @Method(description="Add a chuckNorrisAxis with only chucknorrisplugin entries")
-    public Object chuckNorris(@Parameter(description="Axis name") String name) {
+    @DslExtensionMethod(context = AxisContext)
+    public Object chuckNorris( String name) {
         return ChuckNorrisAxis.factory(name, true, [])
     }
 
-    @Method(description="Add a chuckNorrisAxis with only manual (List) entries")
-    public Object chuckNorrisManual(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") List<String> quotes) {
+    @DslExtensionMethod(context = AxisContext)
+    public Object chuckNorrisManual(String name, List<String> quotes) {
         return ChuckNorrisAxis.factory(name, false, quotes)
     }
 
-    @Method(description="Add a chuckNorrisAxis with only manual (vaargs) entries")
-    public Object chuckNorrisManual(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") String... quotes) {
+    @DslExtensionMethod(context = AxisContext)
+    public Object chuckNorrisManual(String name, String... quotes) {
         return ChuckNorrisAxis.factory(name, false, Arrays.asList(quotes))
     }
 
-    @Method(description="Add a chuckNorrisAxis with chucknorrisplugin and (List) manual entries")
-    public Object chuckNorrisBoth(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") List<String> quotes) {
+    @DslExtensionMethod(context = AxisContext)
+    public Object chuckNorrisBoth(String name, List<String> quotes) {
         return ChuckNorrisAxis.factory(name, true, quotes)
     }
 
-    @Method(description="Add a chuckNorrisAxis with chucknorrisplugin and (vaargs) manual entries")
-    public Object chuckNorrisBoth(@Parameter(description="Axis name") String name, @Parameter(description="The quotes to add as individual axis") String... quotes) {
+    @DslExtensionMethod(context = AxisContext)
+    public Object chuckNorrisBoth(String name, String... quotes) {
         return ChuckNorrisAxis.factory(name, true, Arrays.asList(quotes))
     }
 }
